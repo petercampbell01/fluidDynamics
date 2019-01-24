@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta lang="en-nz">
+        <title>Fluid Experiments</title>
+        <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+        <script src="./js/model.js"></script>
+        <script src="./js/view.js"></script>
+        <script src="./js/controller.js"></script>
+  
+    </head>
+    <header>
+        <h1>Water Pressure, Velocity and Distance</h1>
+    </header>
+    <body>
+        <div id ="wrapper">
+            <div id="liquidExperiments">
+                <canvas id="canvas" onclick="runSimulation(event)" width = 600 height = 400 >
+                </canvas>
+            </div>
+            <div id = "results">
+                Click anywhere on the water column to discover the statistics
+            </div>
+        </div>
+    </body>
+
+</html>
+<script>
+
+    function getMousePos(event){
+        let rect = canvas.getBoundingClientRect();
+        let output = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        }
+        return output
+    }
+
+    function runSimulation(event){
+        let mousePosition = getMousePos(event)
+        controller.ex1_3RunSimulation(mousePosition)
+    }
+
+    var canvas = document.getElementById("canvas")
+    var displayResults = document.getElementById("results")
+    canvas.style.border = "black solid 2px"
+    var view = new SimulationCanvas(canvas, displayResults)
+    var controller = new SimController(view)
+    controller.ex1_3()
+
+</script>

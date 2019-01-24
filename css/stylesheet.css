@@ -1,0 +1,12 @@
+html{
+    font-family: arial, verdana, helvetica, sans-serif;
+    line-height: 1.5;
+
+}
+#results{
+    width: 20rem;
+    padding: 0.5rem 2rem;
+}
+#wrapper{
+    display: flex;
+}
