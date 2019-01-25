@@ -27,13 +27,14 @@ class SimController{
 
             let results = "Water Height: " + waterHeight + " cm<br>Height above ground: " + heightY +
                 " cm<br>Water Pressure: "+ pressure + 
-                " kPa <br>Velocity: " + velocity +
-                "<br>Time: " + time +
-                " seconds<br>Distance: " + (distance * view.interval).toFixed(2) + " cm"
+                " kPa <br>Velocity: " + parseFloat(velocity/10).toFixed(2) +
+                " m/s<br>Time: " + time +
+                " seconds<br>Distance: " + (distance * this.view.interval).toFixed(2) + " cm"
             this.view.displayResults(results)
             results = results.replace(/<br>/g, "\n")
             console.log(results)
-            this.view.waterFlow(velocity, time, mousePosition.y, distance)
+            //this.view.waterFlow(velocity, time, mousePosition.y, distance)
+            this.view.waterFlowRealTime(velocity, time, mousePosition.y, distance)
         }
 
     }

@@ -79,9 +79,60 @@ class SimulationCanvas{
 			}
 			this.ctx.stroke()
 		}
-
+		//REDRAW GROUND AND ADD GROUND SCALE AGAIN
+		this.drawGround()
+		this.drawHorizontalScaleRight()
 	}
-	
+
+	waterFlowRealTime(velocity, time, startY=0 , endX=0){
+        if(!this.controller){
+            return false
+        }
+        let startX = this.containerRight
+		let endY = this.groundTop
+		endX = (endX * this.scaleInterval)  + this.containerRight
+		this.ctx.strokeStyle = this.flowingWater
+		this.ctx.lineWidth = 3
+		this.ctx.moveTo( startX, startY)
+		let ctx = this.ctx
+		let newPosX = startX
+		let newPosY = startY
+		let interval = this.interval
+		let scaleInterval = this.scaleInterval
+		let totalTime = time * 1000
+		let timeInterval = 5
+		let timeCounter = timeInterval
+		let timingArray = new Array()
+		let animationsRun = setInterval(function(){
+			if(timeCounter > totalTime){
+				let startTime =  timingArray[0]
+				let endTime = timingArray[timingArray.length-1]
+				console.log("Start Time: " +startTime.getSeconds() + ":" + startTime.getMilliseconds())
+				console.log("End Time: " + endTime.getSeconds() +":" + endTime.getMilliseconds())
+				clearInterval(animationsRun)
+			}
+			let newPositions = this.controller.getXYFlowPosition(velocity, (timeCounter / 9500) )
+			newPosX = ((newPositions.x * interval) * scaleInterval) + startX
+			newPosY = ((newPositions.y * interval) * scaleInterval) + startY
+			if(newPosY < endY){
+				ctx.lineTo(newPosX, newPosY)
+				ctx.stroke()
+			}else{
+				ctx.lineTo(endX, endY)
+				ctx.stroke()
+				let startTime =  timingArray[0]
+				let endTime = timingArray[timingArray.length-1]
+				console.log("Start Time: " +startTime.getSeconds() + ":" + startTime.getMilliseconds())
+				console.log("End Time: " + endTime.getSeconds() +":" + endTime.getMilliseconds())
+				clearInterval(animationsRun)
+				
+			}
+			timeCounter += timeInterval
+			let myDate= new Date()
+			timingArray.push(myDate)
+			}, timeInterval)
+	}
+
 	drawSky(){
 		this.ctx.fillStyle = this.skyColour
 		this.ctx.fillRect(0, 0, this.canvasWidth, this.groundTop)	
@@ -128,7 +179,14 @@ class SimulationCanvas{
 		}
 	}
 	
-	drawHorizontalScaleRight(min, max){
+	drawHorizontalScaleRight(min = 0, max = 100){
+		if (!this.horizontalScaleMin && !this.horizontalScaleMax){
+			this.horizontalScaleMin = min
+			this.horizontalScaleMax = max
+		}else{
+			min = this.horizontalScaleMin
+			max = this.horizontalScaleMax
+		}
 		this.ctx.font = "10px arial"
 		this.ctx.fillStyle = "white"
 		for(let scaler = min, xPos = this.containerRight; scaler <= max; scaler += this.interval, xPos += this.scaleInterval ){
