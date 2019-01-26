@@ -16,6 +16,18 @@ class SimController{
         return this.currentCalc.getXYFlowPosition(velocity, time)
     }
 
+    getFlowPositionArray(timeInterval, velocity, time){
+        let positionArray = new Array()
+        let timeInMilliseconds = time * 1000
+        for(let i = timeInterval; i <= timeInMilliseconds; i += timeInterval){
+            let position = this.getXYFlowPosition(velocity, (i/10000) )
+            position.x = (position.x * this.view.interval) * this.view.scaleInterval
+            position.y = (position.y * this.view.interval) * this.view.scaleInterval
+            positionArray.push(position)
+        }
+        return positionArray
+    }
+
     ex1_3RunSimulation(mousePosition){
         if(this.view.checkMouseInWater(mousePosition)){
             let waterHeight = parseFloat(this.view.calculateWaterHeight(mousePosition.y)).toFixed(2)
@@ -24,17 +36,18 @@ class SimController{
             let velocity = parseFloat(this.currentCalc.calculateVelocity(waterHeight)).toFixed(2)
             let time = parseFloat(this.currentCalc.calculateTimeToGround(heightY)).toFixed(2)
             let distance = parseFloat(this.currentCalc.calculateHorizontalDistanceWaterTravelled(velocity, time)).toFixed(2)// I don't what units of measurement I have here
-
+            let timeInterval = 5
+            let positionArray = this.getFlowPositionArray(timeInterval, velocity, time)
             let results = "Water Height: " + waterHeight + " cm<br>Height above ground: " + heightY +
                 " cm<br>Water Pressure: "+ pressure + 
                 " kPa <br>Velocity: " + parseFloat(velocity/10).toFixed(2) +
                 " m/s<br>Time: " + time +
                 " seconds<br>Distance: " + (distance * this.view.interval).toFixed(2) + " cm"
+  
             this.view.displayResults(results)
             results = results.replace(/<br>/g, "\n")
             console.log(results)
-            //this.view.waterFlow(velocity, time, mousePosition.y, distance)
-            this.view.waterFlowRealTime(velocity, time, mousePosition.y, distance)
+            this.view.displayWaterFlowAnimation(timeInterval, positionArray, mousePosition.y, distance)
         }
 
     }

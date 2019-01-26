@@ -53,7 +53,7 @@ class SimulationCanvas{
         return true
     }
 	
-	waterFlow(velocity, time, startY=0 , endX=0){
+/*	waterFlow(velocity, time, startY=0 , endX=0){
         if(!this.controller){
             return false
         }
@@ -83,12 +83,9 @@ class SimulationCanvas{
 		this.drawGround()
 		this.drawHorizontalScaleRight()
 	}
-
-	waterFlowRealTime(velocity, time, startY=0 , endX=0){
-        if(!this.controller){
-            return false
-        }
-        let startX = this.containerRight
+*/
+	displayWaterFlowAnimation(timeInterval, positionArray, startY=0 , endX=0){
+		let startX = this.containerRight
 		let endY = this.groundTop
 		endX = (endX * this.scaleInterval)  + this.containerRight
 		this.ctx.strokeStyle = this.flowingWater
@@ -97,40 +94,25 @@ class SimulationCanvas{
 		let ctx = this.ctx
 		let newPosX = startX
 		let newPosY = startY
-		let interval = this.interval
-		let scaleInterval = this.scaleInterval
-		let totalTime = time * 1000
-		let timeInterval = 5
-		let timeCounter = timeInterval
-		let timingArray = new Array()
+		let posArray = positionArray
 		let animationsRun = setInterval(function(){
-			if(timeCounter > totalTime){
-				let startTime =  timingArray[0]
-				let endTime = timingArray[timingArray.length-1]
-				console.log("Start Time: " +startTime.getSeconds() + ":" + startTime.getMilliseconds())
-				console.log("End Time: " + endTime.getSeconds() +":" + endTime.getMilliseconds())
+			if(positionArray.length === 0){
 				clearInterval(animationsRun)
 			}
-			let newPositions = this.controller.getXYFlowPosition(velocity, (timeCounter / 9500) )
-			newPosX = ((newPositions.x * interval) * scaleInterval) + startX
-			newPosY = ((newPositions.y * interval) * scaleInterval) + startY
-			if(newPosY < endY){
+			let newPosition = posArray.shift()
+			if(newPosition){
+				newPosX = newPosition.x + startX
+				newPosY = newPosition.y + startY
+			}
+				if(newPosY < endY){
 				ctx.lineTo(newPosX, newPosY)
 				ctx.stroke()
 			}else{
 				ctx.lineTo(endX, endY)
 				ctx.stroke()
-				let startTime =  timingArray[0]
-				let endTime = timingArray[timingArray.length-1]
-				console.log("Start Time: " +startTime.getSeconds() + ":" + startTime.getMilliseconds())
-				console.log("End Time: " + endTime.getSeconds() +":" + endTime.getMilliseconds())
 				clearInterval(animationsRun)
-				
 			}
-			timeCounter += timeInterval
-			let myDate= new Date()
-			timingArray.push(myDate)
-			}, timeInterval)
+		}, timeInterval)
 	}
 
 	drawSky(){
