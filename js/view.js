@@ -97,6 +97,7 @@ class SimulationCanvas{
 		let posArray = positionArray
 		let animationsRun = setInterval(function(){
 			if(positionArray.length === 0){
+				mouseActive = true
 				clearInterval(animationsRun)
 			}
 			let newPosition = posArray.shift()
@@ -110,6 +111,7 @@ class SimulationCanvas{
 			}else{
 				ctx.lineTo(endX, endY)
 				ctx.stroke()
+				mouseActive = true
 				clearInterval(animationsRun)
 			}
 		}, timeInterval)

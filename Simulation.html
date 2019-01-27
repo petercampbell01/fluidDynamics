@@ -29,22 +29,27 @@
 <script>
 
     function getMousePos(event){
-        let rect = canvas.getBoundingClientRect();
-        let output = {
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        }
-        return output
+        if(mouseActive){
+            mouseActive = false
+            let rect = canvas.getBoundingClientRect();
+            let output = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            }
+            return output
+            }
     }
 
     function runSimulation(event){
         let mousePosition = getMousePos(event)
+        
         controller.ex1_3RunSimulation(mousePosition)
     }
 
     var canvas = document.getElementById("canvas")
     var displayResults = document.getElementById("results")
     canvas.style.border = "black solid 2px"
+    var mouseActive = true
     var view = new SimulationCanvas(canvas, displayResults)
     var controller = new SimController(view)
     controller.ex1_3()
