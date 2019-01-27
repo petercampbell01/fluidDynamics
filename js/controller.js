@@ -53,6 +53,7 @@ class SimController{
             this.view.displayResults(results)
             console.log(consoleResults)
             this.view.displayWaterFlowAnimation(timeInterval, positionArray, mousePosition.y, distance)
+            //this.view.waterFlow(velocity, time, mousePosition.y, distance)
         }
 
     }
