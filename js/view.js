@@ -98,6 +98,8 @@ class SimulationCanvas{
 		let animationsRun = setInterval(function(){
 			if(positionArray.length === 0){
 				mouseActive = true
+				this.drawGround()
+				this.drawHorizontalScaleRight()
 				clearInterval(animationsRun)
 			}
 			let newPosition = posArray.shift()
@@ -112,6 +114,8 @@ class SimulationCanvas{
 				ctx.lineTo(endX, endY)
 				ctx.stroke()
 				mouseActive = true
+				this.drawGround()
+				this.drawHorizontalScaleRight()
 				clearInterval(animationsRun)
 			}
 		}, timeInterval)
