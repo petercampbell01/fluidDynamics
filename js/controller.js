@@ -43,7 +43,7 @@ class SimController{
             " cm</td></tr><tr><td>Water Pressure:</td><td>"+ pressure + 
             " kPa </td></tr><tr><td>Velocity:</td><td>" + parseFloat(velocity/10).toFixed(2) +
             " m/s</td></tr><tr><td>Time:</td><td>" + time +
-            "seconds</td></tr><tr><td>Distance:</td><td>" + (distance * this.view.interval).toFixed(2) + " cm</td></tr> </table>"
+            " seconds</td></tr><tr><td>Distance:</td><td>" + (distance * this.view.interval).toFixed(2) + " cm</td></tr> </table>"
             let consoleResults = "Water Height: " + waterHeight + " cm\nHeight above ground: " + heightY +
             " cm\nWater Pressure: "+ pressure + 
             " kPa \nVelocity: " + parseFloat(velocity/10).toFixed(2) +

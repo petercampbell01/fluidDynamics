@@ -82,6 +82,7 @@ class SimulationCanvas{
 		//REDRAW GROUND AND ADD GROUND SCALE AGAIN
 		this.drawGround()
 		this.drawHorizontalScaleRight()
+		mouseActive = true
 	}
 
 	displayWaterFlowAnimation(timeInterval, positionArray, startY=0 , endX=0){
