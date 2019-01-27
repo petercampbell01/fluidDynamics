@@ -38,15 +38,20 @@ class SimController{
             let distance = parseFloat(this.currentCalc.calculateHorizontalDistanceWaterTravelled(velocity, time)).toFixed(2)// I don't what units of measurement I have here
             let timeInterval = 5
             let positionArray = this.getFlowPositionArray(timeInterval, velocity, time)
-            let results = "Water Height: " + waterHeight + " cm<br>Height above ground: " + heightY +
-                " cm<br>Water Pressure: "+ pressure + 
-                " kPa <br>Velocity: " + parseFloat(velocity/10).toFixed(2) +
-                " m/s<br>Time: " + time +
-                " seconds<br>Distance: " + (distance * this.view.interval).toFixed(2) + " cm"
-  
+            let results = "<table><tr><td>Water Height:</td><td>" + waterHeight + 
+            " cm</td></tr><tr><td>Height above ground:</td><td>" + heightY +
+            " cm</td></tr><tr><td>Water Pressure:</td><td>"+ pressure + 
+            " kPa </td></tr><tr><td>Velocity:</td><td>" + parseFloat(velocity/10).toFixed(2) +
+            " m/s</td></tr><tr><td>Time:</td><td>" + time +
+            "second</td></tr><tr><td>Distance:</td><td>" + (distance * this.view.interval).toFixed(2) + " cm</td></tr> </table>"
+            let consoleResults = "Water Height: " + waterHeight + " cm\nHeight above ground: " + heightY +
+            " cm\nWater Pressure: "+ pressure + 
+            " kPa \nVelocity: " + parseFloat(velocity/10).toFixed(2) +
+            " m/s\nTime: " + time +
+            " seconds\nDistance: " + (distance * this.view.interval).toFixed(2) + " cm"
+
             this.view.displayResults(results)
-            results = results.replace(/<br>/g, "\n")
-            console.log(results)
+            console.log(consoleResults)
             this.view.displayWaterFlowAnimation(timeInterval, positionArray, mousePosition.y, distance)
         }
 

@@ -53,7 +53,7 @@ class SimulationCanvas{
         return true
     }
 	
-/*	waterFlow(velocity, time, startY=0 , endX=0){
+	waterFlow(velocity, time, startY=0 , endX=0){
         if(!this.controller){
             return false
         }
@@ -83,7 +83,7 @@ class SimulationCanvas{
 		this.drawGround()
 		this.drawHorizontalScaleRight()
 	}
-*/
+
 	displayWaterFlowAnimation(timeInterval, positionArray, startY=0 , endX=0){
 		let startX = this.containerRight
 		let endY = this.groundTop
@@ -94,12 +94,14 @@ class SimulationCanvas{
 		let ctx = this.ctx
 		let newPosX = startX
 		let newPosY = startY
+		let drawGround = this.drawGround()
+		let drawScale = this.drawHorizontalScaleRight()
 		let posArray = positionArray
 		let animationsRun = setInterval(function(){
 			if(positionArray.length === 0){
 				mouseActive = true
-				this.drawGround()
-				this.drawHorizontalScaleRight()
+				drawGround
+				drawScale
 				clearInterval(animationsRun)
 			}
 			let newPosition = posArray.shift()
@@ -114,8 +116,8 @@ class SimulationCanvas{
 				ctx.lineTo(endX, endY)
 				ctx.stroke()
 				mouseActive = true
-				this.drawGround()
-				this.drawHorizontalScaleRight()
+				drawGround
+				drawScale
 				clearInterval(animationsRun)
 			}
 		}, timeInterval)

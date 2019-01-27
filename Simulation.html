@@ -27,23 +27,21 @@
 
 </html>
 <script>
-
     function getMousePos(event){
-        if(mouseActive){
-            mouseActive = false
-            let rect = canvas.getBoundingClientRect();
-            let output = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            }
-            return output
-            }
+        let rect = canvas.getBoundingClientRect();
+        let output = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        }
+        return output
     }
 
     function runSimulation(event){
-        let mousePosition = getMousePos(event)
-        
-        controller.ex1_3RunSimulation(mousePosition)
+        if(mouseActive){
+            mouseActive = false
+            let mousePosition = getMousePos(event)
+           controller.ex1_3RunSimulation(mousePosition)
+        }
     }
 
     var canvas = document.getElementById("canvas")
